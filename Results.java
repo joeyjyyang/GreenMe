@@ -35,12 +35,12 @@ public class Results extends AppCompatActivity {
         if (location.equals("London")) {
             if (object.equals("plastic bottle")) {
                 results = "London: Please place all your plastic containers in your Containers Bin.";
-            }
-            else if (object.equals("paper towel")) {
+            } else if (object.equals("paper towel")) {
                 results = "London: Please dispose of any paper towels and napkins in your Garbage Bin.";
-            }
-            else if (object.equals("aluminum can")) {
+            } else if (object.equals("aluminum can")) {
                 results = "London: Please place this item in your Blue Bin.  If appropriate, please empty and rinse this item.";
+            } else {
+                results = "Oops, the item detected is made of an unknown substance to humans. Please dispose of it by throwing it into the sun.";
             }
         }
         else if (location.equals("Toronto")) {
@@ -53,13 +53,16 @@ public class Results extends AppCompatActivity {
             else if (object.equals("aluminum can")) {
                 results = "Toronto: Please place this item in your Blue Bin.  If appropriate, please empty and rinse this item.  All recycling should fit in your Blue Bin with the lid closed.  If you have extra recycling, please keep materials until your next Blue Bin collection.   Occasionally you can place extra recycling in clear plastic bags beside the full blue bin. If you wish to exchange your Blue Bin for a larger size (at no cost), please call 311.";
             }
+            else {
+                results = "Oops, the item detected is made of an unknown substance to humans. Please dispose of it by throwing it into the sun.";
+            }
         }
         else {
-            results = "Test string";
+            results = "Sorry, London and Toronto are currenty the only supported cities.";
         }
         TextView resultsBox = findViewById(R.id.databox_results);
         resultsBox.setText(results);
-            /*Scanner scanner = null;
+        /*Scanner scanner = null;
         try {
             scanner = new Scanner(new File("../../assets/test.txt"));
             scanner = new Scanner(getResources().openRawResource(R.raw.dictionary));
@@ -86,5 +89,5 @@ public class Results extends AppCompatActivity {
             }
         }
         */
+        }
     }
-}
