@@ -30,15 +30,15 @@
     </LinearLayout>
 
     <TextView
-        android:id="@+id/location"
+        android:id="@+id/Location_Text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textStyle="bold"
-        android:textSize="24dp"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
         android:layout_marginLeft="17dp"
         android:layout_marginTop="17dp"
-        android:text="City: London" />
+        android:text="@string/Location_Text"
+        android:textSize="24dp"
+        android:textStyle="bold" />
 
 </RelativeLayout>

@@ -120,7 +120,7 @@ public class StartUp extends AppCompatActivity {
 
     //Get location from GPS and update box
     private void updateLocationBox(String location) {
-        EditText editText = (EditText) findViewById(R.id.Test_Location);
+        EditText editText = (EditText) findViewById(R.id.Location_Box);
         editText.setText(location);
     }
 
@@ -168,15 +168,15 @@ public class StartUp extends AppCompatActivity {
 
         //Sends to Results page
         public void openCamera (View view){
-            EditText editText = (EditText) findViewById(R.id.Test_Location);
+            EditText editText = (EditText) findViewById(R.id.Location_Box);
              String finalAddress = editText.getText().toString();
             if(finalAddress.equals("London")||finalAddress.equals("Toronto")){
                 Intent intent = new Intent(this, CameraMain.class);
-                EditText currentLocation = (EditText) findViewById(R.id.Test_Location);
+                EditText currentLocation = (EditText) findViewById(R.id.Location_Box);
                 String location = currentLocation.getText().toString();
                 String object = "Object";
                 intent.putExtra(OBJECT, object);
-                intent.putExtra(LOCATION, location);
+                intent.putExtra(LOCATION, finalAddress);
                 startActivity(intent);
             }
             else
