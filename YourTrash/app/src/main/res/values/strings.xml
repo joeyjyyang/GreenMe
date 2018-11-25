@@ -2,7 +2,7 @@
     <string name="app_name">YourTrash</string>
     <string name="Label_Location">Location:</string>
     <string name="Label_Object">Object:</string>
-    <string name="Label_Disposal">Where do I put it?</string>
+    <string name="Label_Disposal">How to dispose:</string>
     <string name="Location_Text">City:</string>
     <string name="databox_object">temp</string>
 </resources>

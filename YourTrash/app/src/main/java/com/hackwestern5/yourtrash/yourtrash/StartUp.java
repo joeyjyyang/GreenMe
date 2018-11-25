@@ -76,17 +76,9 @@ public class StartUp extends AppCompatActivity {
 
     private static final String CLOUD_VISION_API_KEY = "AIzaSyDTSPh3hmG0X-4rEiYTct5_gNpnWWcAa70";
 
-    /*@BindView(R.id.takePicture)
-    Button takePicture;
-
     @BindView(R.id.imageProgress)
     ProgressBar imageUploadProgress;
 
-    @BindView(R.id.imageView)
-    ImageView imageView;
-
-    @BindView(R.id.visionAPIData)
-    TextView visionAPIData;*/
     private Feature feature;
     private Bitmap bitmap;
     private String[] visionAPI = new String[]{"LABEL_DETECTION"};
@@ -107,6 +99,7 @@ public class StartUp extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_start_up);
+        ButterKnife.bind(this);
 
         feature = new Feature();
         feature.setType(visionAPI[0]);
@@ -244,24 +237,22 @@ public class StartUp extends AppCompatActivity {
 
         //Sends to Results page
         public void openCamera (View view){
-            Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-            startActivityForResult(intent, CAMERA_REQUEST_CODE);
-            /*takePictureFromCamera();
-
             EditText editText = (EditText) findViewById(R.id.Location_Box);
              String finalAddress = editText.getText().toString();
             if(finalAddress.equals("London")||finalAddress.equals("Toronto")){
-                Intent intent = new Intent(this, CameraMain.class);
+                Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                startActivityForResult(intent, CAMERA_REQUEST_CODE);
+                /*Intent intent = new Intent(this, CameraMain.class);
                 EditText currentLocation = (EditText) findViewById(R.id.Location_Box);
                 intent.putExtra(LOCATION, finalAddress);
-                startActivity(intent);
+                startActivity(intent);*/
             }
             else
             {
                 Toast toast = Toast.makeText(getApplicationContext(), "Municipality not supported!", Toast.LENGTH_LONG);
                 toast.show();
                 updateLocationBox("");
-            }*/
+            }
 
 
         }
@@ -278,6 +269,7 @@ public class StartUp extends AppCompatActivity {
         Intent intent = new Intent(this, Results.class);
         intent.putExtra(OBJECT, obj_result);
         intent.putExtra(StartUp.LOCATION, mLocation);
+        intent.putExtra("BitmapImage", bitmap);
         startActivity(intent);
     }
 
@@ -292,7 +284,7 @@ public class StartUp extends AppCompatActivity {
 
     @SuppressLint("StaticFieldLeak")
     private void callCloudVision(final Bitmap bitmap, final Feature feature) {
-        //imageUploadProgress.setVisibility(View.VISIBLE);                          TO-DO
+        imageUploadProgress.setVisibility(View.VISIBLE);
         final List<Feature> featureList = new ArrayList<>();
         featureList.add(feature);
 
@@ -337,7 +329,7 @@ public class StartUp extends AppCompatActivity {
             protected void onPostExecute(String result) {
                 obj_result = result;
                 //visionAPIData.setText(result);
-                //imageUploadProgress.setVisibility(View.INVISIBLE);
+                imageUploadProgress.setVisibility(View.INVISIBLE);
                 openResults();
             }
         }.execute();
