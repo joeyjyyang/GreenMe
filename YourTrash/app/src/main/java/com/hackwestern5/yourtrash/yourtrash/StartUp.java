@@ -167,11 +167,11 @@ public class StartUp extends AppCompatActivity {
     }
 
         //Sends to Results page
-        public void openResults (View view){
+        public void openCamera (View view){
             EditText editText = (EditText) findViewById(R.id.Test_Location);
              String finalAddress = editText.getText().toString();
             if(finalAddress.equals("London")||finalAddress.equals("Toronto")){
-                Intent intent = new Intent(this, Results.class);
+                Intent intent = new Intent(this, CameraMain.class);
                 EditText currentLocation = (EditText) findViewById(R.id.Test_Location);
                 String location = currentLocation.getText().toString();
                 String object = "Object";

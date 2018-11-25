@@ -32,11 +32,11 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-        android:id="@+id/Open_Results"
+        android:id="@+id/Open_Camera"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:onClick="openResults"
-        android:text="Open Results"
+        android:onClick="openCamera"
+        android:text="Open Camera"
         tools:layout_editor_absoluteX="87dp"
         tools:layout_editor_absoluteY="160dp" />
 
