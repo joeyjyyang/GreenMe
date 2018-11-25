@@ -52,16 +52,7 @@ public class StartUp extends AppCompatActivity {
         } else requestLocation();
         if (!isLocationEnabled())
             showAlert(1);
-
-//            if (!isLocationEnabled())
-//            showLocationAlert(1);
-//
-//        //note: add more permissions into PERMISSIONS and create checks for them all
-//        if (Build.VERSION.SDK_INT >= 23 && !isLocationGranted()) {
-//            requestPermissions(PERMISSIONS, PERMISSION_ALL);
-//        } else requestLocation();
     }
-
 
     private void showAlert(final int status) {
         String message, title, btnText;
