@@ -17,6 +17,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import java.io.IOException;
 import java.util.List;
@@ -48,12 +49,11 @@ public class StartUp extends AppCompatActivity {
     private void showAlert(final int status) {
         String message, title, btnText;
         if (status == 1) {
-            message = "Your Locations Settings is set to 'Off'.\nPlease Enable Location to " +
-                    "use this app";
+            message = "Enable Location";
             title = "Enable Location";
             btnText = "Location Settings";
         } else {
-            message = "Please allow this app to access location!";
+            message = "Needs access to location!";
             title = "Permission access";
             btnText = "Grant";
         }
@@ -149,7 +149,16 @@ public class StartUp extends AppCompatActivity {
                 if (list != null & list.size() > 0) {
                     Address address = list.get(0);
                     String finalAddress = address.getLocality();
-                    updateLocationBox(finalAddress);
+                    if(finalAddress.equals("London")||finalAddress.equals("Toronto")){
+                        updateLocationBox(finalAddress);
+                    }
+                    else
+                    {
+//                        updateLocationBox("Enter a supported Municipality");
+                        Toast toast = Toast.makeText(getApplicationContext(), "Municipality not supported!", Toast.LENGTH_LONG);
+                        toast.show();
+                        updateLocationBox("");
+                    }
 
                 }
             }
@@ -159,14 +168,25 @@ public class StartUp extends AppCompatActivity {
 
         //Sends to Results page
         public void openResults (View view){
-            Intent intent = new Intent(this, Results.class);
+            EditText editText = (EditText) findViewById(R.id.Test_Location);
+             String finalAddress = editText.getText().toString();
+            if(finalAddress.equals("London")||finalAddress.equals("Toronto")){
+                Intent intent = new Intent(this, Results.class);
+                EditText currentLocation = (EditText) findViewById(R.id.Test_Location);
+                String location = currentLocation.getText().toString();
+                String object = "Object";
+                intent.putExtra(OBJECT, object);
+                intent.putExtra(LOCATION, location);
+                startActivity(intent);
+            }
+            else
+            {
+                Toast toast = Toast.makeText(getApplicationContext(), "Municipality not supported!", Toast.LENGTH_LONG);
+                toast.show();
+                updateLocationBox("");
+            }
 
-            EditText currentLocation = (EditText) findViewById(R.id.Test_Location);
-            String location = currentLocation.getText().toString();
-            String object = "Object";
-            intent.putExtra(OBJECT, object);
-            intent.putExtra(LOCATION, location);
-            startActivity(intent);
+
         }
     }
 
