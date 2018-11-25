@@ -50,8 +50,6 @@ import com.google.api.services.vision.v1.model.EntityAnnotation;
 import com.google.api.services.vision.v1.model.Feature;
 import com.google.api.services.vision.v1.model.Image;
 
-import org.w3c.dom.Text;
-
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -62,6 +60,8 @@ import butterknife.ButterKnife;
 
 
 public class CameraMain extends AppCompatActivity {
+
+    public static final String OBJECT = "temp_string";
 
     /** google vision api declarations **/
     private static final String TAG = "MainActivity";
@@ -85,7 +85,6 @@ public class CameraMain extends AppCompatActivity {
     private Bitmap bitmap;
     private String[] visionAPI = new String[]{"LABEL_DETECTION"};
 
-
     /** camera and layout declarations **/
     private Camera mCamera;
     private CameraPreview mPreview;
@@ -94,6 +93,7 @@ public class CameraMain extends AppCompatActivity {
     private Context myContext;
     private LinearLayout cameraPreview;
     private TextView mCity_view;
+    private String obj_result = "temp_string";
     private String mLocation;
 
     @Override
@@ -102,11 +102,11 @@ public class CameraMain extends AppCompatActivity {
         setContentView(R.layout.activity_camera);
 
         Intent intent = getIntent();
-        String location = intent.getStringExtra(StartUp.LOCATION);
+        mLocation = intent.getStringExtra(StartUp.LOCATION);
 
 
         mCity_view = (TextView) findViewById(R.id.Location_Text);
-        mCity_view.setText(location);
+        mCity_view.setText(mLocation);
 
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         myContext = this;
@@ -118,10 +118,17 @@ public class CameraMain extends AppCompatActivity {
         cameraPreview.addView(mPreview);
 
         capture = (Button) findViewById(R.id.btnCam);
+
+        feature = new Feature();
+        feature.setType(visionAPI[0]);
+        feature.setMaxResults(10);
+
         capture.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mCamera.takePicture(null, null, mPicture);
+                takePictureFromCamera();
+                //mCamera.takePicture(null, null, mPicture);
+                //mPicture = getPictureCallback();
             }
         });
 
@@ -161,6 +168,11 @@ public class CameraMain extends AppCompatActivity {
         }
     }
 
+    public void takePictureFromCamera() {
+        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        startActivityForResult(intent, CAMERA_REQUEST_CODE);
+    }
+
     private Camera.PictureCallback getPictureCallback() {
         Camera.PictureCallback picture = new Camera.PictureCallback() {
             @Override
@@ -176,20 +188,28 @@ public class CameraMain extends AppCompatActivity {
 
     //Sends to Results page
     public void openResults (View view){
-        EditText editText = (EditText) findViewById(R.id.Location_Box);
-        String finalAddress = editText.getText().toString();
-        if(finalAddress.equals("London")||finalAddress.equals("Toronto")){
-            Intent intent = new Intent(this, Results.class);
-            EditText currentLocation = (EditText) findViewById(R.id.Location_Box);
-            String location = currentLocation.getText().toString();
-            String object = "Object";
-            intent.putExtra(StartUp.OBJECT, object);
-            intent.putExtra(StartUp.LOCATION, location);
-            startActivity(intent);
-        }
-
+        Intent intent = new Intent(this, Results.class);
+        intent.putExtra(OBJECT, obj_result);
+        intent.putExtra(StartUp.LOCATION, mLocation);
+        startActivity(intent);
     }
 
+    public void openResults_temp (){
+        Intent intent = new Intent(this, Results.class);
+        intent.putExtra(OBJECT, obj_result);
+        intent.putExtra(StartUp.LOCATION, mLocation);
+        startActivity(intent);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == CAMERA_REQUEST_CODE && resultCode == RESULT_OK) {
+            bitmap = (Bitmap) data.getExtras().get("data");
+            //imageView.setImageBitmap(bitmap);
+            callCloudVision(bitmap, feature);
+            openResults_temp();
+        }
+    }
 
     @SuppressLint("StaticFieldLeak")
     private void callCloudVision(final Bitmap bitmap, final Feature feature) {
@@ -236,6 +256,7 @@ public class CameraMain extends AppCompatActivity {
             }
 
             protected void onPostExecute(String result) {
+                obj_result = result;
                 //visionAPIData.setText(result);
                 //imageUploadProgress.setVisibility(View.INVISIBLE);
             }

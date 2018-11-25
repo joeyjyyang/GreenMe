@@ -50,7 +50,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="5dp"
-        android:text="TextView"
+        android:text="@string/databox_object"
         app:layout_constraintBaseline_toBaselineOf="@+id/Object_Label"
         app:layout_constraintStart_toEndOf="@+id/Object_Label" />
 
