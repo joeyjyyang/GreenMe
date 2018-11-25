@@ -4,7 +4,9 @@ import android.Manifest;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.location.Address;
 import android.location.Criteria;
+import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationManager;
 import android.os.Build;
@@ -16,6 +18,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 
+import java.io.IOException;
+import java.util.List;
 
 
 public class StartUp extends AppCompatActivity {
@@ -120,13 +124,13 @@ public class StartUp extends AppCompatActivity {
         editText.setText(location);
     }
 
-    public void locationAction(View view) {
-        Location location;
+    public void locationAction(View view) throws IOException {
+        Location location = null;
         double lat = 0, lng = 0;
         int locManagerNull = 1;
         int locationNull = 1;
         if (locationManager != null) {
-            locManagerNull = 0;
+//            locManagerNull = 0;
             if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
                 // TODO: Consider calling
                 //    ActivityCompat#requestPermissions
@@ -139,28 +143,30 @@ public class StartUp extends AppCompatActivity {
             }
             location = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
             if (location != null) {
-                locationNull = 0;
-                lat = location.getLatitude();
-                lng = location.getLongitude();
+                Geocoder geoCoder = new Geocoder(getApplicationContext());
+                List<Address> list = geoCoder.getFromLocation(location
+                        .getLatitude(), location.getLongitude(), 1);
+                if (list != null & list.size() > 0) {
+                    Address address = list.get(0);
+                    String finalAddress = address.getLocality();
+                    updateLocationBox(finalAddress);
+
+                }
             }
         }
-        
-        String finalAddress = lat + " " + lng + " " + locManagerNull + " " + locationNull;
-        updateLocationBox(finalAddress);
 
     }
 
-    //Sends to Results page
-    public void openResults(View view) {
-        Intent intent = new Intent(this, Results.class);
+        //Sends to Results page
+        public void openResults (View view){
+            Intent intent = new Intent(this, Results.class);
 
-        EditText currentLocation = (EditText) findViewById(R.id.Test_Location);
-        String location = currentLocation.getText().toString();
-        String object = "Object";
-        intent.putExtra(OBJECT, object);
-        intent.putExtra(LOCATION, location);
-        startActivity(intent);
+            EditText currentLocation = (EditText) findViewById(R.id.Test_Location);
+            String location = currentLocation.getText().toString();
+            String object = "Object";
+            intent.putExtra(OBJECT, object);
+            intent.putExtra(LOCATION, location);
+            startActivity(intent);
+        }
     }
-}
-
 
