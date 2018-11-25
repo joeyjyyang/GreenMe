@@ -32,20 +32,37 @@ public class Results extends AppCompatActivity {
         locationBox.setText(location);
 
         String results = "";
-        if (object.equals("plastic bottle")) {
-            results = "Please place empty containers in your Blue Bin, leave lids and sprayers on. All recycling should fit in your Blue Bin with the lid closed. If you have extra recycling, please keep materials until your next Blue Bin collection. Occasionally you can place extra recycling in clear plastic bags beside the full blue bin. If you wish to exchange your Blue Bin for a larger size (at no cost), please call 311.";
+        if (location.equals("London")) {
+            if (object.equals("plastic bottle")) {
+                results = "London: Please place all your plastic containers in your Containers Bin.";
+            }
+            else if (object.equals("paper towel")) {
+                results = "London: Please dispose of any paper towels and napkins in your Garbage Bin.";
+            }
+            else if (object.equals("aluminum can")) {
+                results = "London: Please place this item in your Blue Bin.  If appropriate, please empty and rinse this item.";
+            }
         }
-        else if (object.equals("paper towel")) {
-            results = "Please place this item in your Green Bin.  Line either your indoor container or outdoor Green Bin with a plastic bag or kraft paper bag.  Do not line both.  Green Bins can not weigh more than 20 kgs/44 lbs.  Excess organic material can be set out in clear plastic bags (weighing less than 20 kgs/44 lbs) beside the Green Bin.  You can get an additional green bin at <a href=\"http://www.toronto.ca/environment_days/index.htm\" target=\"_blank\">Community Environment Days</a> , at one of the City's <a href=\"http://www.toronto.ca/garbage/depots.htm\" target=\"_blank\">Recycling and Solid Waste Depots</a> or by calling 311.";
+        else if (location.equals("Toronto")) {
+            if (object.equals("plastic bottle")) {
+                results = "Toronto: Please place empty containers in your Blue Bin, leave lids and sprayers on. All recycling should fit in your Blue Bin with the lid closed. If you have extra recycling, please keep materials until your next Blue Bin collection. Occasionally you can place extra recycling in clear plastic bags beside the full blue bin. If you wish to exchange your Blue Bin for a larger size (at no cost), please call 311.";
+            }
+            else if (object.equals("paper towel")) {
+                results = "Toronto: Please place this item in your Green Bin.  Line either your indoor container or outdoor Green Bin with a plastic bag or kraft paper bag.  Do not line both.  Green Bins can not weigh more than 20 kgs/44 lbs.  Excess organic material can be set out in clear plastic bags (weighing less than 20 kgs/44 lbs) beside the Green Bin.  You can get an additional green bin at <a href=\"http://www.toronto.ca/environment_days/index.htm\" target=\"_blank\">Community Environment Days</a> , at one of the City's <a href=\"http://www.toronto.ca/garbage/depots.htm\" target=\"_blank\">Recycling and Solid Waste Depots</a> or by calling 311.";
+            }
+            else if (object.equals("aluminum can")) {
+                results = "Toronto: Please place this item in your Blue Bin.  If appropriate, please empty and rinse this item.  All recycling should fit in your Blue Bin with the lid closed.  If you have extra recycling, please keep materials until your next Blue Bin collection.   Occasionally you can place extra recycling in clear plastic bags beside the full blue bin. If you wish to exchange your Blue Bin for a larger size (at no cost), please call 311.";
+            }
         }
-        else if (object.equals("aluminum can")) {
-            results = "Please place this item in your Blue Bin.  If appropriate, please empty and rinse this item.  All recycling should fit in your Blue Bin with the lid closed.  If you have extra recycling, please keep materials until your next Blue Bin collection.   Occasionally you can place extra recycling in clear plastic bags beside the full blue bin. If you wish to exchange your Blue Bin for a larger size (at no cost), please call 311.";
+        else {
+            results = "Test string";
         }
         TextView resultsBox = findViewById(R.id.databox_results);
         resultsBox.setText(results);
             /*Scanner scanner = null;
         try {
             scanner = new Scanner(new File("../../assets/test.txt"));
+            scanner = new Scanner(getResources().openRawResource(R.raw.dictionary));
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
