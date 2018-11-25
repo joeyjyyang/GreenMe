@@ -13,12 +13,15 @@ public class Results extends AppCompatActivity {
         setContentView(R.layout.activity_results);
 
 
-        // Get the Intent that started this activity and extract the string
+        // Get the Intent that started this activity and extract information
         Intent intent = getIntent();
-        String message = intent.getStringExtra(StartUp.LOCATION);
 
-        // Capture the layout's TextView and set the string as its text
-        TextView textView = findViewById(R.id.databox_location);
-        textView.setText(message);
+        String object = intent.getStringExtra(StartUp.OBJECT);
+        TextView objectBox = findViewById(R.id.databox_object);
+        objectBox.setText(object);
+
+        String location = intent.getStringExtra(StartUp.LOCATION);
+        TextView locationBox = findViewById(R.id.databox_location);
+        locationBox.setText(location);
     }
 }
