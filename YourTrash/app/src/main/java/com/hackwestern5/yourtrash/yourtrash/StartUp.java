@@ -1,15 +1,11 @@
 package com.hackwestern5.yourtrash.yourtrash;
 
 import android.Manifest;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.location.Address;
 import android.location.Criteria;
-import android.location.Geocoder;
 import android.location.Location;
-import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Build;
 import android.provider.Settings;
@@ -17,21 +13,13 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 
-import java.io.IOException;
-
-import java.util.List;
-import java.util.Locale;
 
 
 public class StartUp extends AppCompatActivity {
     final static int PERMISSION_ALL = 1;
-    //    final static String[] PERMISSIONS = {android.Manifest.permission.ACCESS_COARSE_LOCATION,
-//            Manifest.permission.ACCESS_FINE_LOCATION,Manifest.permission.CAMERA,Manifest.permission.INTERNET};
-//    LocationManager locationManager;
     public static final String OBJECT = "com.hackwestern5.yourtrash.yourtrash.object";
     public static final String LOCATION = "com.hackwestern5.yourtrash.yourtrash.location";
 
@@ -39,7 +27,6 @@ public class StartUp extends AppCompatActivity {
             Manifest.permission.ACCESS_FINE_LOCATION};
 
     private LocationManager locationManager;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -157,6 +144,7 @@ public class StartUp extends AppCompatActivity {
                 lng = location.getLongitude();
             }
         }
+        
         String finalAddress = lat + " " + lng + " " + locManagerNull + " " + locationNull;
         updateLocationBox(finalAddress);
 
@@ -174,57 +162,5 @@ public class StartUp extends AppCompatActivity {
         startActivity(intent);
     }
 }
-    //    private void showLocationAlert(final int status) {
-//        String message, title, btnText;
-//        if (status == 1) {
-//            message = "To continue, turn on device location.";
-//            title = "Enable Location";
-//            btnText = "Location Settings";
-//        } else {
-//            message = "Please allow this app to access location!";
-//            title = "Permission access";
-//            btnText = "Grant";
-//        }
-//        final AlertDialog.Builder dialog = new AlertDialog.Builder(this);
-//        dialog.setCancelable(false);
-//        dialog.setTitle(title)
-//                .setMessage(message)
-//                .setPositiveButton(btnText, new DialogInterface.OnClickListener() {
-//                    @Override
-//                    public void onClick(DialogInterface paramDialogInterface, int paramInt) {
-//                        if (status == 1) {
-//                            Intent myIntent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
-//                            startActivity(myIntent);
-//                        } else
-//                            requestPermissions(PERMISSIONS, PERMISSION_ALL);
-//                    }
-//                })
-//                .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-//                    @Override
-//                    public void onClick(DialogInterface paramDialogInterface, int paramInt) {
-//                        finish();
-//                    }
-//                });
-//        dialog.show();
-//    }
-//
-//    private boolean isLocationEnabled() {
-//        return locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER) ||
-//                locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
-//    }
-//
-//    //Permission Checks
-//
-//    private boolean isLocationGranted() {
-//        if (checkSelfPermission(android.Manifest.permission.ACCESS_COARSE_LOCATION)
-//                == PackageManager.PERMISSION_GRANTED || checkSelfPermission(android.Manifest.permission.ACCESS_FINE_LOCATION)
-//                == PackageManager.PERMISSION_GRANTED) {
-//            Log.v("mylog", "Location permission is granted");
-//            return true;
-//        } else {
-//            Log.v("mylog", "Location permission not granted");
-//            return false;
-//        }
-//    }
-//}
+
 
